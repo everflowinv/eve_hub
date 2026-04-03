@@ -1,0 +1,5 @@
+mcp[cli]>=1.0
+uvicorn>=0.30
+starlette>=0.38
+sse-starlette>=2.0
+requests>=2.28
