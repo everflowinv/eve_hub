@@ -18,6 +18,51 @@ import subprocess
 import sys
 from pathlib import Path
 
+# ---------------------------------------------------------------------------
+# Load environment from .env files (API keys etc.)
+# ---------------------------------------------------------------------------
+
+def _load_env_files():
+    """Load .env files so skills get their API keys."""
+    env_files = [
+        Path.home() / ".openclaw" / "workspace" / ".env",
+        Path.home() / ".openclaw" / ".env",
+    ]
+    # Also load per-skill .env files
+    for skill_dir in [
+        Path.home() / ".openclaw" / "workspace" / "skills",
+        Path.home() / ".openclaw" / "skills",
+    ]:
+        if skill_dir.is_dir():
+            for entry in skill_dir.iterdir():
+                env_path = entry / ".env"
+                if env_path.is_file():
+                    env_files.append(env_path)
+                # Also check scripts/.env
+                scripts_env = entry / "scripts" / ".env"
+                if scripts_env.is_file():
+                    env_files.append(scripts_env)
+
+    for env_file in env_files:
+        if not env_file.is_file():
+            continue
+        try:
+            with open(env_file) as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    if "=" in line:
+                        key, _, value = line.partition("=")
+                        key = key.strip()
+                        value = value.strip().strip('"').strip("'")
+                        if key and key not in os.environ:
+                            os.environ[key] = value
+        except Exception:
+            pass
+
+_load_env_files()
+
 from mcp.server import Server
 from mcp.server.sse import SseServerTransport
 from mcp.types import Tool, TextContent

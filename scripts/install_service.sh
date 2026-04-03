@@ -20,6 +20,17 @@ fi
 
 mkdir -p "$LOG_DIR"
 
+# Collect API keys from current environment to pass to the service
+ENV_KEYS_XML=""
+for key in GEMINI_API_KEY EXA_API_KEY GOOGLE_API_KEY FINCHAT_API_KEY FINCHAT_TOKEN LIBRARY_API_TOKEN ANTHROPIC_API_KEY OPENAI_API_KEY BRAVE_API_KEY; do
+    val="${!key:-}"
+    if [ -n "$val" ]; then
+        ENV_KEYS_XML="${ENV_KEYS_XML}
+        <key>${key}</key>
+        <string>${val}</string>"
+    fi
+done
+
 cat > "$PLIST_PATH" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -38,6 +49,13 @@ cat > "$PLIST_PATH" <<EOF
     </array>
     <key>WorkingDirectory</key>
     <string>$(dirname "$SKILL_DIR")</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string>${HOME}</string>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>${ENV_KEYS_XML}
+    </dict>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
