@@ -120,6 +120,103 @@ These are loaded from:
 
 ---
 
+## Antigravity / Gemini CLI Setup (stdio proxy)
+
+Antigravity (and other stdio-only MCP hosts like Cursor, Windsurf, Claude Desktop) don't support SSE transport directly. You need a small **proxy script** that bridges SSE↔stdio.
+
+### Step 1: Install Python dependencies
+
+```bash
+pip install mcp anyio httpx httpx-sse
+```
+
+### Step 2: Copy the proxy script
+
+Copy `scripts/eve_hub_proxy.py` from this repo to your local machine. For example on Windows:
+
+```
+C:\Users\<YOU>\.gemini\antigravity\eve_hub_proxy.py
+```
+
+Or on macOS/Linux:
+
+```
+~/.gemini/antigravity/eve_hub_proxy.py
+```
+
+### Step 3: Configure MCP
+
+Edit your MCP config file (location depends on the host):
+
+| Host | Config File |
+|------|------------|
+| Antigravity | `~/.gemini/antigravity/mcp_config.json` |
+| Cursor | `~/.cursor/mcp.json` |
+| Claude Desktop | `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) |
+
+Add the following (adjust paths for your system):
+
+**Windows:**
+```json
+{
+  "mcpServers": {
+    "eve_hub": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\<YOU>\\.gemini\\antigravity\\eve_hub_proxy.py",
+        "http://<EVE_TAILSCALE_IP>:18800/sse"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUTF8": "1",
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}
+```
+
+**macOS / Linux:**
+```json
+{
+  "mcpServers": {
+    "eve_hub": {
+      "command": "python3",
+      "args": [
+        "/home/<YOU>/.gemini/antigravity/eve_hub_proxy.py",
+        "http://<EVE_TAILSCALE_IP>:18800/sse"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUTF8": "1",
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}
+```
+
+> **⚠️ Windows gotcha:** If `python` doesn't resolve correctly, use the full path to your Python executable, e.g.:
+> ```
+> "command": "C:\\Users\\<YOU>\\AppData\\Local\\Python\\bin\\python.exe"
+> ```
+
+> **⚠️ The `env` block is required.** Without `PYTHONIOENCODING=utf-8` and `PYTHONUNBUFFERED=1`, the proxy may silently fail on Windows due to encoding issues or buffered stdout blocking the stdio MCP transport.
+
+### Step 4: Verify
+
+Restart your MCP host (Antigravity/Cursor/etc.), then check that eve-hub tools appear in the tool list. The proxy writes a debug log to `proxy.log` next to the proxy script — check it if connections fail.
+
+### How it works
+
+```
+Antigravity ↔ stdio ↔ eve_hub_proxy.py ↔ SSE/HTTP ↔ eve-hub MCP server (Eve's Mac)
+```
+
+The proxy connects to Eve's MCP server via SSE and translates messages to stdio format that the local MCP host understands.
+
+---
+
 ## Security
 
 - MCP server listens on `0.0.0.0:18800` — accessible only within the Tailscale tailnet
