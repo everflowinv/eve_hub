@@ -45,7 +45,7 @@ cat > "$PLIST_PATH" <<EOF
         <string>--port</string>
         <string>${PORT}</string>
         <string>--host</string>
-        <string>0.0.0.0</string>
+        <string>127.0.0.1</string>
     </array>
     <key>WorkingDirectory</key>
     <string>$(dirname "$SKILL_DIR")</string>
