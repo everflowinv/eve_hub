@@ -46,3 +46,27 @@
 [2026-05-29T06:40:41.501333] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='resources/templates/list', params={'_meta': {'progressToken': 2}}, jsonrpc='2.0', id=3)), metadata=None)
 [2026-05-29T06:40:41.511239] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCError(jsonrpc='2.0', id=2, error=ErrorData(code=-32601, message='Method not found', data=None))), metadata=None)
 [2026-05-29T06:40:41.514803] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCError(jsonrpc='2.0', id=3, error=ErrorData(code=-32601, message='Method not found', data=None))), metadata=None)
+[2026-06-07T14:00:49.143938] Proxy starting — target: http://127.0.0.1:18800/sse
+[2026-06-07T14:00:49.188857] SSE connected successfully
+[2026-06-07T14:00:49.188947] stdio server initialized — forwarding messages
+[2026-06-07T14:00:49.189444] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='initialize', params={'protocolVersion': '2025-06-18', 'capabilities': {'elicitation': {}}, 'clientInfo': {'name': 'codex-mcp-client', 'title': 'Codex', 'version': '0.135.0-alpha.1'}}, jsonrpc='2.0', id=0)), metadata=None)
+[2026-06-07T14:00:49.201808] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCResponse(jsonrpc='2.0', id=0, result={'protocolVersion': '2025-06-18', 'capabilities': {'experimental': {}, 'tools': {'listChanged': False}}, 'serverInfo': {'name': 'eve-hub', 'version': '1.27.0'}})), metadata=None)
+[2026-06-07T14:00:49.202257] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCNotification(method='notifications/initialized', params=None, jsonrpc='2.0')), metadata=None)
+[2026-06-07T14:00:49.202726] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='tools/list', params={'_meta': {'progressToken': 0}}, jsonrpc='2.0', id=1)), metadata=None)
+[2026-06-07T14:00:49.234857] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCResponse(jsonrpc='2.0', id=1, result={'tools': [{'name': 'eve_13f_tracker', 'description': 'Fetches SEC 13F institutional holdings and outputs a fixed-format categorized narrative report (China Book / AI-Semi-US SaaS / Other US Book), with determinis
+[2026-06-07T14:00:49.235882] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='resources/list', params={'_meta': {'progressToken': 1}}, jsonrpc='2.0', id=2)), metadata=None)
+[2026-06-07T14:00:49.236377] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='resources/templates/list', params={'_meta': {'progressToken': 2}}, jsonrpc='2.0', id=3)), metadata=None)
+[2026-06-07T14:00:49.244027] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCError(jsonrpc='2.0', id=2, error=ErrorData(code=-32601, message='Method not found', data=None))), metadata=None)
+[2026-06-07T14:00:49.245932] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCError(jsonrpc='2.0', id=3, error=ErrorData(code=-32601, message='Method not found', data=None))), metadata=None)
+[2026-06-07T14:01:54.744821] Proxy starting — target: http://127.0.0.1:18800/sse
+[2026-06-07T14:01:54.795291] SSE connected successfully
+[2026-06-07T14:01:54.795379] stdio server initialized — forwarding messages
+[2026-06-07T14:01:54.795869] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='initialize', params={'protocolVersion': '2025-06-18', 'capabilities': {'elicitation': {}}, 'clientInfo': {'name': 'codex-mcp-client', 'title': 'Codex', 'version': '0.137.0-alpha.4'}}, jsonrpc='2.0', id=0)), metadata=None)
+[2026-06-07T14:01:54.802167] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCResponse(jsonrpc='2.0', id=0, result={'protocolVersion': '2025-06-18', 'capabilities': {'experimental': {}, 'tools': {'listChanged': False}}, 'serverInfo': {'name': 'eve-hub', 'version': '1.27.0'}})), metadata=None)
+[2026-06-07T14:01:54.802759] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCNotification(method='notifications/initialized', params=None, jsonrpc='2.0')), metadata=None)
+[2026-06-07T14:01:54.803307] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='tools/list', params={'_meta': {'progressToken': 0}}, jsonrpc='2.0', id=1)), metadata=None)
+[2026-06-07T14:01:54.824723] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCResponse(jsonrpc='2.0', id=1, result={'tools': [{'name': 'eve_13f_tracker', 'description': 'Fetches SEC 13F institutional holdings and outputs a fixed-format categorized narrative report (China Book / AI-Semi-US SaaS / Other US Book), with determinis
+[2026-06-07T14:01:55.181251] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='resources/templates/list', params={'_meta': {'progressToken': 1}}, jsonrpc='2.0', id=2)), metadata=None)
+[2026-06-07T14:01:55.181994] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='resources/list', params={'_meta': {'progressToken': 2}}, jsonrpc='2.0', id=3)), metadata=None)
+[2026-06-07T14:01:55.190562] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCError(jsonrpc='2.0', id=2, error=ErrorData(code=-32601, message='Method not found', data=None))), metadata=None)
+[2026-06-07T14:01:55.191302] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCError(jsonrpc='2.0', id=3, error=ErrorData(code=-32601, message='Method not found', data=None))), metadata=None)
