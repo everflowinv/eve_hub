@@ -283,8 +283,6 @@ def create_app(server: Server) -> Starlette:
             )
         return Response()
 
-    async def handle_messages(request):
-        await sse.handle_post_message(request.scope, request.receive, request._send)
 
     async def health(request):
         skills = discover_skills()
@@ -301,7 +299,9 @@ def create_app(server: Server) -> Starlette:
         routes=[
             Route("/health", health),
             Route("/sse", handle_sse),
-            Mount("/messages/", routes=[Route("/", handle_messages, methods=["POST"])]),
+            # handle_post_message is a raw ASGI app that sends its own response;
+            # wrapping it in a Route makes Starlette await a None return value.
+            Mount("/messages/", app=sse.handle_post_message),
         ],
     )
 
