@@ -65,8 +65,6 @@ _load_env_files()
 
 from mcp.server import Server
 from mcp.server.sse import SseServerTransport
-from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
-import contextlib
 from mcp.types import Tool, TextContent
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse, Response
@@ -296,26 +294,7 @@ def create_app(server: Server) -> Starlette:
             "reference": sum(1 for s in skills.values() if not s["has_run_sh"]),
         })
 
-    # -- Streamable HTTP transport (modern MCP) ------------------------------
-    # Codex / newer clients added via `--url` speak streamable HTTP, not SSE.
-    # Stateless mode = each request self-contained; most robust across clients.
-    session_manager = StreamableHTTPSessionManager(
-        app=server,
-        event_store=None,
-        json_response=False,
-        stateless=True,
-    )
-
-    async def handle_streamable_http(scope, receive, send):
-        await session_manager.handle_request(scope, receive, send)
-
-    @contextlib.asynccontextmanager
-    async def lifespan(app):
-        async with session_manager.run():
-            logger.info("Streamable HTTP session manager started (/mcp)")
-            yield
-
-    app = Starlette(
+    return Starlette(
         debug=False,
         routes=[
             Route("/health", health),
@@ -323,14 +302,8 @@ def create_app(server: Server) -> Starlette:
             # handle_post_message is a raw ASGI app that sends its own response;
             # wrapping it in a Route makes Starlette await a None return value.
             Mount("/messages/", app=sse.handle_post_message),
-            # Streamable HTTP endpoint for Codex `--url` and modern MCP clients.
-            Mount("/mcp", app=handle_streamable_http),
         ],
-        lifespan=lifespan,
     )
-    # Bare /mcp 307-redirects to /mcp/ (method-preserving, so compliant clients
-    # re-POST the body). Register the URL as .../mcp/ to skip the redirect.
-    return app
 
 
 # ---------------------------------------------------------------------------
@@ -372,7 +345,6 @@ def main():
     logger.info(f"Starting eve-hub MCP server on {args.host}:{args.port}")
     logger.info(f"Discovered {len(skills)} skills ({exec_count} executable, {ref_count} reference)")
     logger.info(f"Register on remote OpenClaw: openclaw mcp set eve-hub '{{\"url\":\"http://<tailscale-ip>:{args.port}/sse\"}}'")
-    logger.info(f"Codex / streamable-HTTP clients: point --url at http://<host>:{args.port}/mcp")
 
     uvicorn.run(app, host=args.host, port=args.port, log_level="info")
 
