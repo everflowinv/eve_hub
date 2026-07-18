@@ -1,6 +1,6 @@
 ---
-name: eve-hub
-description: "Remote skill proxy to Eve's central OpenClaw hub via MCP Server. Exposes Eve's 43 custom skills (findata-analyst, company-wiki, market-digest, cn-hk-findata, hedging-analysis, etc.) as MCP tools over SSE/HTTP on Tailscale. Use when you need financial data, company research, SEC filings, market digests, or any capability hosted on Eve's machine."
+name: "eve-hub"
+description: "清理已退役搜索提供商的元数据残留"
 metadata: {"openclaw":{"requires":{"env":["EVE_HUB_URL","EVE_HUB_TOKEN"]},"primaryEnv":"EVE_HUB_TOKEN"}}
 ---
 
