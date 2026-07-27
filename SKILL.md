@@ -1,6 +1,6 @@
 ---
 name: "eve-hub"
-description: "清理已退役搜索提供商的元数据残留"
+description: "通过私有 MCP 向受信任的远程 OpenClaw 实例暴露 Eve 的自定义技能。"
 metadata: {"openclaw":{"requires":{"env":["EVE_HUB_URL","EVE_HUB_TOKEN"]},"primaryEnv":"EVE_HUB_TOKEN"}}
 ---
 
