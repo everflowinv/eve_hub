@@ -532,3 +532,15 @@
 [2026-08-22T04:35:36.830096] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCNotification(method='notifications/initialized', params=None, jsonrpc='2.0')), metadata=None)
 [2026-08-22T04:35:36.830555] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='tools/list', params=None, jsonrpc='2.0', id=1)), metadata=None)
 [2026-08-22T04:35:36.851845] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCResponse(jsonrpc='2.0', id=1, result={'tools': [{'name': 'eve_13f_tracker', 'description': 'Fetches SEC 13F holdings and outputs the fixed-format categorized report (China Book / AI-Semi-US SaaS / Other US Book) with deterministic merge and filters.'
+[2026-08-23T05:53:39.014772] Proxy starting — target: http://127.0.0.1:18800/sse
+[2026-08-23T05:53:39.073214] SSE connected successfully
+[2026-08-23T05:53:39.073328] stdio server initialized — forwarding messages
+[2026-08-23T05:53:39.074103] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='initialize', params={'protocolVersion': '2025-06-18', 'capabilities': {'elicitation': {'form': {}, 'url': {}}}, 'clientInfo': {'name': 'codex-mcp-client', 'title': 'Codex', 'version': '0.149.0-alpha.4.1'}}, jsonrpc='2.0', id=0)), meta
+[2026-08-23T05:53:39.089157] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCResponse(jsonrpc='2.0', id=0, result={'protocolVersion': '2025-06-18', 'capabilities': {'experimental': {}, 'tools': {'listChanged': False}}, 'serverInfo': {'name': 'eve-hub', 'version': '1.27.0'}})), metadata=None)
+[2026-08-23T05:53:39.089637] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCNotification(method='notifications/initialized', params=None, jsonrpc='2.0')), metadata=None)
+[2026-08-23T05:53:39.090221] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='tools/list', params={'_meta': {'progressToken': 0}}, jsonrpc='2.0', id=1)), metadata=None)
+[2026-08-23T05:53:39.146102] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCResponse(jsonrpc='2.0', id=1, result={'tools': [{'name': 'eve_13f_tracker', 'description': 'Fetches SEC 13F holdings and outputs the fixed-format categorized report (China Book / AI-Semi-US SaaS / Other US Book) with deterministic merge and filters.'
+[2026-08-23T05:53:39.155031] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='resources/templates/list', params={'_meta': {'progressToken': 2}}, jsonrpc='2.0', id=3)), metadata=None)
+[2026-08-23T05:53:39.155693] [client→eve] SessionMessage(message=JSONRPCMessage(root=JSONRPCRequest(method='resources/list', params={'_meta': {'progressToken': 1}}, jsonrpc='2.0', id=2)), metadata=None)
+[2026-08-23T05:53:39.164013] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCError(jsonrpc='2.0', id=3, error=ErrorData(code=-32601, message='Method not found', data=None))), metadata=None)
+[2026-08-23T05:53:39.166310] [eve→client] SessionMessage(message=JSONRPCMessage(root=JSONRPCError(jsonrpc='2.0', id=2, error=ErrorData(code=-32601, message='Method not found', data=None))), metadata=None)
