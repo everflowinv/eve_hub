@@ -72,6 +72,7 @@ from starlette.applications import Starlette
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Mount, Route
 import uvicorn
+import yaml
 
 # ---------------------------------------------------------------------------
 # Config
@@ -127,14 +128,18 @@ def discover_skills() -> dict:
             except Exception:
                 continue
 
-            # Parse description from YAML frontmatter
+            # Parse the YAML block itself; regexes return only ">" or "|"
+            # for folded/literal descriptions and can match body examples.
             desc = ""
-            m = re.search(
-                r'^description:\s*["\']?(.+?)["\']?\s*$',
-                content, re.MULTILINE,
-            )
-            if m:
-                desc = m.group(1).strip().strip('"').strip("'")
+            frontmatter = re.match(r"^---\s*\n(.*?)\n---(?:\n|$)", content, re.S)
+            if frontmatter:
+                try:
+                    metadata = yaml.safe_load(frontmatter.group(1)) or {}
+                    value = metadata.get("description") if isinstance(metadata, dict) else None
+                    if isinstance(value, str):
+                        desc = value.strip()
+                except yaml.YAMLError:
+                    logger.warning("Invalid skill frontmatter: %s", skill_md_path)
 
             has_run_sh = (entry / "run.sh").exists()
 
